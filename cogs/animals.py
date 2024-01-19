@@ -1,5 +1,6 @@
 import disnake
 from disnake.ext import commands
+
 import json
 import requests
 
@@ -11,6 +12,7 @@ class Animals(commands.Cog):
     # ЖИВОТНЫЕ
     @commands.slash_command(description="Фотографии животных")
     async def animals(ctx, животное: str = commands.Param(description="Выберите животное", choices=["Лиса", "Кот", "Собака", "Панда", "Красная панда"])):
+        
         if животное == "Лиса":
 
             response = requests.get('https://some-random-api.com/animal/fox') # Get-запрос

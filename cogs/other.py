@@ -21,5 +21,24 @@ class Other(commands.Cog):
         embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
         await ctx.response.send_message(embed=embed)
 
+    # ПИСАТЬ ОТ БОТА
+    @commands.slash_command(description="Писать от имени бота")
+    async def say(self, ctx, текст: str = commands.Param(description="Напишите текст")):
+        try:
+            if "@" in текст:
+                embed = disnake.Embed(
+                    title = "❌ Ошибка",
+                    description = "К сожалению, но текст не должен содеражть "@"!",
+                    color = disnake.Color.red())
+                await ctx.send(embed = embed, ephemeral = True)
+            else:
+                await ctx.send(текст)
+        except:
+            embed = disnake.Embed(
+                    title = "❌ Ошибка",
+                    description = "К сожалению, но произошла неизвестная ошибка!",
+                    color = disnake.Color.red())
+            await ctx.send(embed = embed, ephemeral = True)
+
 def setup(bot):
     bot.add_cog(Other(bot))
