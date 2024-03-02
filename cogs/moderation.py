@@ -134,13 +134,13 @@ class Moderation(commands.Cog):
             if участник == ctx.author:
                 embed = disnake.Embed(
                     title = "❌ Ошибка",
-                    description = "К сожалению, но Вы не можете заткнуть самого себя!",
+                    description = "К сожалению, но Вы не можете снять затычку с самого себя!",
                     color = disnake.Color.red())
                 return await ctx.send(embed = embed, ephemeral = True)
             elif участник.bot:
                 embed = disnake.Embed(
                     title = "❌ Ошибка",
-                    description = "К сожалению, но Вы не можете заткнуть бота!",
+                    description = "К сожалению, но Вы не можете снять затычку с бота!",
                     color = disnake.Color.red())
                 return await ctx.send(embed = embed, ephemeral = True)
             else:
