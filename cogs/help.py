@@ -24,10 +24,24 @@ class Help(commands.Cog):
             inline = False)
         embed.add_field(
             name = '🎮 Развлечения',
-            value = '``ben`` ``animals`` ``coin`` ``nsfw``')
+            value = '``ben`` ``animals`` ``coin`` ``nsfw``',
+            inline = False)
+        embed.add_field(
+            name = '💰 Экономика',
+            value = '``balance`` ``withdraw`` ``deposit`` ``bet`` ``work`` ``bonus`` ``pay`` ``coin_eco`` ``leaderboard``',
+            inline = False)
+        embed.add_field(
+            name = '⭐ Репутация',
+            value = '``reputation-stats`` ``reputation-manage`` ``reputation-leaderboard``',
+            inline = False)
         embed.add_field(
             name = '🎫 Другое',
-            value = '``say`` ``info`` ``avatar``')
-        await ctx.send(embed = embed, ephemeral = True)
+            value = '``say`` ``info`` ``avatar`` ``report`` ``text-symbol``',
+            inline = False)
+        components=[
+            disnake.ui.Button(label = "Добавить бота", style = disnake.ButtonStyle.url, url = settings['add_bot'], emoji = "➕"),
+            disnake.ui.Button(label = "Сервер поддержки", style = disnake.ButtonStyle.url, url = settings['support_server'], emoji = "📕")
+        ]
+        await ctx.send(embed = embed, ephemeral = True, components = components)
 def setup(bot):
     bot.add_cog(Help(bot))

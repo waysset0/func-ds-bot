@@ -10,7 +10,7 @@ class RolePlay(commands.Cog):
         self.bot = bot
 
     # ПОЦЕЛОВАТЬ
-    @commands.slash_command(description="Поцеловать")
+    @commands.slash_command(description = "Поцеловать")
     async def kiss(self, ctx, участник: disnake.Member = commands.Param(description="Выберите пользователя")):
         
         if участник.bot:

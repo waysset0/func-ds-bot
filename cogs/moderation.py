@@ -12,19 +12,32 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages = True)
     @commands.slash_command(description = 'Очистка сообщений')
     async def clear(self, ctx, количество: int = commands.Param(description = 'Укажите количество сообщений для удаления')):
-        if количество > 1000:
+        try:
+            if количество <= 0:
+                embed = disnake.Embed(
+                    title = "❌ Ошибка",
+                    description = "К сожалению, но я не могу удалить 0 или меньше сообщений!",
+                    color = disnake.Color.red())
+                await ctx.send(embed = embed, ephemeral = True)
+            elif количество > 1000:
+                embed = disnake.Embed(
+                    title = "❌ Ошибка",
+                    description = "К сожалению, но я не могу удалить более 1000 сообщений!",
+                    color = disnake.Color.red())
+                await ctx.send(embed = embed, ephemeral = True)
+            else:
+                deleted = await ctx.channel.purge(limit = количество)
+                embed = disnake.Embed(
+                    title = '✅ Успешно',
+                    description = f'Вы удалили **{len(deleted)}/{количество}** сообщений!',
+                    color = disnake.Color.green())
+                await ctx.send(embed = embed, ephemeral=True)
+        except Exception as e:
             embed = disnake.Embed(
                 title = "❌ Ошибка",
-                description = "К сожалению, но я не могу удалить более 1000 сообщений!",
+                description = f"К сожалению, но произошла ошибка: \n**— Боту или Вам не хватает прав для управления сообщениями**!",
                 color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
-        else:
-            deleted = await ctx.channel.purge(limit = количество)
-            embed = disnake.Embed(
-                title = '✅ Успешно',
-                description = f'Вы удалили **{len(deleted)}/{количество}** сообщений!',
-                color = disnake.Color.green())
-            await ctx.send(embed = embed, ephemeral=True)
 
     # БАН
     @commands.has_permissions(ban_members = True)
@@ -41,7 +54,7 @@ class Moderation(commands.Cog):
         except Exception as e:
             embed = disnake.Embed(
                 title = "❌ Ошибка",
-                description = f"К сожалению, но произошла ошибка: **{e}**!",
+                description = f"К сожалению, но произошла ошибка: \n**— Боту или Вам не хватает прав для бана участников сервера**!",
                 color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
 
@@ -60,7 +73,7 @@ class Moderation(commands.Cog):
         except Exception as e:
             embed = disnake.Embed(
                 title = "❌ Ошибка",
-                description = f"К сожалению, но произошла ошибка: **{e}**!",
+                description = f"К сожалению, но произошла ошибка: \n**— Боту или Вам не хватает прав для бана участников сервера**!",
                 color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
 
@@ -80,7 +93,7 @@ class Moderation(commands.Cog):
         except Exception as e:
             embed = disnake.Embed(
                 title = "❌ Ошибка",
-                description = f"К сожалению, но произошла ошибка: **{e}**!",
+                description = f"К сожалению, но произошла ошибка: \n**— Боту или Вам не хватает прав для кика участников сервера**!",
                 color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
 
@@ -122,7 +135,7 @@ class Moderation(commands.Cog):
         except Exception as e:
             embed = disnake.Embed(
                 title = "❌ Ошибка",
-                description = f"К сожалению, но произошла ошибка: **{e}**!",
+                description = f"К сожалению, но произошла ошибка: \n**— Боту или Вам не хватает прав администратора сервера**!",
                 color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
 
@@ -155,10 +168,11 @@ class Moderation(commands.Cog):
         except Exception as e:
             embed = disnake.Embed(
                 title = "❌ Ошибка",
-                description = f"К сожалению, но произошла ошибка: **{e}**!",
+                description = f"К сожалению, но произошла ошибка: \n**— Боту или Вам не хватает прав администратора сервера**!",
                 color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
 
+    @commands.has_permissions(administrator = True)
     @commands.slash_command(description = 'Поставить медленный режим на текущий канал')
     async def slowmode(self, ctx, время: int = commands.Param(description = 'На сколько Вы хотите медленный режим? (секунды)')):
         try:
@@ -179,7 +193,7 @@ class Moderation(commands.Cog):
         except Exception as e:
             embed = disnake.Embed(
                 title = "❌ Ошибка",
-                description = f"К сожалению, но произошла ошибка: **{e}**!",
+                description = f"К сожалению, но произошла ошибка: \n**— Боту или Вам не хватает прав администратора сервера**!",
                 color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
 

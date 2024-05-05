@@ -3,6 +3,8 @@ from disnake.ext import commands
 
 from config import settings
 
+import pyfiglet
+
 class Other(commands.Cog):
 
     def __init__(self, bot):
@@ -15,11 +17,11 @@ class Other(commands.Cog):
         member = пользователь or ctx.author
         # Создаем эмбед (вложенное сообщение) с информацией о аватаре пользователя.
         embed = disnake.Embed(
-            title=f"Аватар пользователя – {member}",
-            color=0x2d2d30
+            title = f"Аватар пользователя – {member}",
+            color = settings['color']
         )
         # Устанавливаем изображение (аватар) в эмбед.
-        embed.set_image(url=member.display_avatar)
+        embed.set_image(url = member.display_avatar)
         embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
         await ctx.response.send_message(embed=embed)
 
@@ -30,7 +32,7 @@ class Other(commands.Cog):
             if "@" in текст:
                 embed = disnake.Embed(
                     title = "❌ Ошибка",
-                    description = "К сожалению, но текст не должен содеражть "@"!",
+                    description = "К сожалению, но мой создатель запретил мне упоминать кого-либо!",
                     color = disnake.Color.red())
                 await ctx.send(embed = embed, ephemeral = True)
             else:
@@ -42,23 +44,57 @@ class Other(commands.Cog):
                     color = disnake.Color.red())
             await ctx.send(embed = embed, ephemeral = True)
 
-    # # INFO
-    # @commands.slash_command(description = 'Информация о боте')
-    # async def info(ctx):
-    #     guild_count = len(bot.guilds)
-    #     channels = len(client.get_all_channels())
-    #     voice_channels = len(client.get_all_voice_channels())
-    #     all_channels = channels + voice_channels
-    #     try:
-    #         embed = disnake.Embed(
-    #             title = 'ℹ Информация',
-    #             description = f'Создан: **7 января 2024 года**\nРазработчик: **youbanan**\n\nСерверы: {guild_count}\nПользователи: {sum(guild.member_count for guild in bot.guilds)}\nКаналы: {all_channels}',
-    #             color = settings['color'])
-    #         embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
-    #         await ctx.send(embed = embed)
-    #     except Exception as e:
-    #         await ctx.send(f'пздец ошибка {e}')
+    @commands.cooldown(1, 10800, commands.BucketType.user)
+    @commands.slash_command(description = 'Обращение')
+    async def report(self, inter, *, обращение: str = commands.Param(description = 'Напишите развернутое сообщение')):
+        try:
+            guild = self.bot.get_guild(1205922933256753213)
+            channel = await guild.fetch_channel(1217037532165046274)
+            embed = disnake.Embed(
+                title = '⚠ Новое обращение',
+                description = f'Текст обращения: **{обращение}**',
+                color = settings['color'])
+            components = [
+            disnake.ui.Button(style = disnake.ButtonStyle.secondary, label = f'{inter.author} ({inter.author.id})', disabled = True)]
+            await channel.send(embed = embed, components = components)
+            await inter.send("Спасибо за обращение! В случае, если Ваше обращение окажется полезным, то разработчики добавят Вам репутацию! 💖", ephemeral = True)
+        except Exception as e:
+            await inter.send(f'ошибка **{e}**')
 
+    @commands.slash_command(name = 'text-symbol', description = 'Текст символами')
+    async def text_symbol(self, inter, *, текст: str = commands.Param(description = 'Введите, желаемый текст'), стиль: str = commands.Param(description="Выберите", choices=["Slant", "Graffiti", "Starwars", "Poison"])):
+        try:
+
+            if стиль == "Slant":
+                ready_text = pyfiglet.figlet_format(текст, font = "slant")
+
+                embed = disnake.Embed(
+                    description = f'```{ready_text}```',
+                    color = settings['color'])
+                await inter.send(embed = embed)
+            elif стиль == "Graffiti":
+                ready_text = pyfiglet.figlet_format(текст, font = "graffiti")
+
+                embed = disnake.Embed(
+                    description = f'```{ready_text}```',
+                    color = settings['color'])
+                await inter.send(embed = embed)
+            elif стиль == "Starwars":
+                ready_text = pyfiglet.figlet_format(текст, font = "starwars")
+
+                embed = disnake.Embed(
+                    description = f'```{ready_text}```',
+                    color = settings['color'])
+                await inter.send(embed = embed)
+            elif стиль == "Poison":
+                ready_text = pyfiglet.figlet_format(текст, font = "poison")
+
+                embed = disnake.Embed(
+                    description = f'```{ready_text}```',
+                    color = settings['color'])
+                await inter.send(embed = embed)
+        except Exception as e:
+            await inter.send(f"Произошла неизвестная ошибка, попробуйте снова!\n\nТекст ошибки: ``{e}``")
 
 def setup(bot):
     bot.add_cog(Other(bot))

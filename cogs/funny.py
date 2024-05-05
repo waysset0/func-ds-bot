@@ -3,6 +3,7 @@ from disnake.ext import commands
 
 import random
 from random import choice
+import asyncio
 
 class Funny(commands.Cog):
 
@@ -51,52 +52,6 @@ class Funny(commands.Cog):
             embed.set_thumbnail(url='https://media.tenor.com/aomZLSiXCQ8AAAAM/ugh.gif')
             embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
         await ctx.send(embed=embed)
-
-    # МОНЕТКА
-    # @commands.slash_command(description="Монетка")
-    # async def coin(ctx, сторона: str = commands.Param(description="Выберите сторону", choices=["Орёл", "Решка"])):
-        
-    #     random_r = random.randint(1, 2)
-        
-    #     if сторона == "Орёл":
-            
-    #         if random_r == 1:
-                
-    #             embed = disnake.Embed(
-    #                 title="✅ Вы угадали!",
-    #                 description="Выпал орёл.",
-    #                 color = disnake.Color.green()
-    #                 )
-    #             embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
-            
-    #         else:
-                
-    #             embed = disnake.Embed(
-    #                 title="❌ Вы не угадали!",
-    #                 description="Выпала решка.",
-    #                 color = disnake.Color.red()
-    #                 )
-    #             embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
-    #     else:
-
-    #         if random_r == 1:
-                
-    #             embed = disnake.Embed(
-    #                 title="✅ Вы угадали!",
-    #                 description="Выпала решка.",
-    #                 color = disnake.Color.green()
-    #                 )
-    #             embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
-            
-    #         else:
-                
-    #             embed = disnake.Embed(
-    #                 title="❌ Вы не угадали!",
-    #                 description="Выпал орёл.",
-    #                 color = disnake.Color.red()
-    #                 )
-    #             embed.set_footer(text = f"Запросил: {ctx.author.name}", icon_url = ctx.author.display_avatar.url)
-    #     await ctx.send(embed=embed)
 
     @commands.slash_command(description = 'Монетка')
     async def coin(self, inter, сторона: str = commands.Param(description = 'Выберите сторону', choices=["Орёл", "Решка"]), участник: disnake.Member = commands.Param(None, description = 'Выберите участника для игры с вами')):
