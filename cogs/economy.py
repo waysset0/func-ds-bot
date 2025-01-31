@@ -11,7 +11,7 @@ class Economy(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.connection = sqlite3.connect('users.db')
+        self.connection = sqlite3.connect('/data/users.db')
         self.cursor = self.connection.cursor()
         self.emoji_money = settings['emoji_money']
 
