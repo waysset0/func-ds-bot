@@ -9,7 +9,7 @@ class Reputation(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.connection = sqlite3.connect('reputation.db')
+        self.connection = sqlite3.connect('/data/reputation.db')
         self.cursor = self.connection.cursor()
 
     @commands.slash_command(name = 'reputation-stats', description='Посмотреть репутацию')
