@@ -16,10 +16,10 @@ intents.bans = True
 
 bot = commands.Bot(command_prefix = "&", intents = intents, help_command = None)
 
-connection = sqlite3.connect('/data/users.db')
+connection = sqlite3.connect('users.db')
 cursor = connection.cursor()
 
-connection_rep = sqlite3.connect('/data/reputation.db')
+connection_rep = sqlite3.connect('reputation.db')
 cursor_rep = connection_rep.cursor()
 
 # ГОТОВНОСТЬ
@@ -227,4 +227,4 @@ async def info(ctx):
         ]
     await ctx.send(embed = embed, components = components)
 
-bot.run(settings['TOKEN'])
+bot.run(os.environ["TOKEN"])
