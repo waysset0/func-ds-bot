@@ -16,7 +16,7 @@ intents.bans = True
 
 bot = commands.Bot(command_prefix = "&", intents = intents, help_command = None)
 
-connection = sqlite3.connect('users.db')
+connection = sqlite3.connect('/data/users.db')
 cursor = connection.cursor()
 
 connection_rep = sqlite3.connect('reputation.db')
